@@ -1,5 +1,5 @@
 use super::Day;
-use std::fmt::{format, Write};
+use std::fmt::Write;
 use std::time::Instant;
 
 pub fn part1(day: &mut Day) {
@@ -74,7 +74,6 @@ pub fn part2(day: &mut Day) {
                 des = false;
             }
 
-            //if problem is with first or last we wont take out the correct number
             if (!asc && !des) || (v[n].abs_diff(v[n - 1]) > 3 || v[n].abs_diff(v[n - 1]) < 1) {
                 if corrupt {
                     return n;
