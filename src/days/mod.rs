@@ -1,9 +1,9 @@
 use std::fs::read_to_string;
 pub mod day01;
+pub mod day02;
 
 #[derive(Debug)]
 pub struct Day {
-    pub number: usize,
     pub input: Vec<String>,
     pub part1: String,
     pub part2: String,
@@ -54,7 +54,6 @@ impl DayBuilder {
         self.get_input();
         Day {
             input: self.input,
-            number: self.number,
             part1: self.part1,
             part2: self.part2,
         }

@@ -9,13 +9,15 @@ macro_rules! exec_advent {
                 let mut test = DayBuilder::new($day_num).as_test().build();
                 $day_mod::part1(&mut test);
                 $day_mod::part2(&mut test);
-                println!("Part 1 test --> {:?}", test.part1);
-                println!("Part 2 test --> {:?}", test.part2);
+                println!("-----------------Day{:?}------------------", $day_num);
+                println!("Tests: {:?} | {:?}", test.part1, test.part2);
                 let mut day = DayBuilder::new($day_num).build();
                 $day_mod::part1(&mut day);
                 $day_mod::part2(&mut day);
-                println!("{:?}", day.part1);
-                println!("{:?}", day.part2);
+                println!("Part 1: {:?}", day.part1);
+                println!("Part 2: {:?}", day.part2);
+                println!("---------------------------------------");
+                println!();
             }
         )* 
     };
