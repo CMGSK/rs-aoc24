@@ -25,6 +25,7 @@ macro_rules! exec_advent {
 
 fn main() {
     exec_advent!(
-        day01, 1
+        day01, 1,
+        day02, 2
     );
 }

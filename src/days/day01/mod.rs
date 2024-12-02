@@ -1,7 +1,9 @@
+use std::time::Instant;
 use std::fmt::Write;
 use super::Day;
 
 pub fn part1(day: &mut Day) {
+    let now = Instant::now();
     let mut result: u32 = 0;
 
     let mut r: Vec<u32> = Vec::new();
@@ -21,10 +23,15 @@ pub fn part1(day: &mut Day) {
         result += rv.abs_diff(lv);
     }
 
-    write!(day.part1, "{}", result).unwrap();
+    if !day.test {
+        write!(day.part1, "{} ({:.2?})", result, now.elapsed()).unwrap();
+    } else {
+        write!(day.part1, "{}", result).unwrap();
+    }
 }
 
 pub fn part2(day: &mut Day) {
+    let now = Instant::now();
     let mut result: u32 = 0;
 
     let mut r: Vec<u32> = Vec::new();
@@ -43,7 +50,11 @@ pub fn part2(day: &mut Day) {
         result += rv * count_rep(&l, rv);
     }
 
-    write!(day.part2, "{}", result).unwrap();
+    if !day.test {
+        write!(day.part2, "{} ({:.2?})", result, now.elapsed()).unwrap();
+    } else {
+        write!(day.part2, "{}", result).unwrap();
+    }
 
     fn count_rep(v: &Vec<u32>, t: u32) -> u32 {
         let mut freq: u32 = 0;

@@ -7,6 +7,7 @@ pub struct Day {
     pub input: Vec<String>,
     pub part1: String,
     pub part2: String,
+    pub test: bool
 }
 
 pub struct DayBuilder {
@@ -56,6 +57,7 @@ impl DayBuilder {
             input: self.input,
             part1: self.part1,
             part2: self.part2,
+            test: self.test
         }
     }
 }
