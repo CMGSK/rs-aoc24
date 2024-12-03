@@ -29,7 +29,7 @@ pub fn part1(day: &mut Day) {
 
             if let Some(s_pos) = s[avd..].find(suf) {
                 let s_end = avd + s_pos + suf.len();
-                ptr = avd;
+                ptr = avd + 1;
                 if p_start.abs_diff(s_end) > pre.len() + suf.len() + 7 {
                     continue;
                 }
@@ -38,7 +38,7 @@ pub fn part1(day: &mut Day) {
                     .filter(|x| x.is_numeric() || *x == ',')
                     .collect();
                 if let Some(r) = it
-                    .split(",")
+                    .split(',')
                     .filter_map(|x| x.parse::<i16>().ok())
                     .try_fold([0, 0], |mut acc, n| {
                         if (acc[0] != 0 && acc[1] != 0) || n == 0 {
@@ -62,7 +62,75 @@ pub fn part1(day: &mut Day) {
     }
 }
 
-pub fn part2(day: &mut Day) {}
+pub fn part2(day: &mut Day) {
+    let now = Instant::now();
+
+    let prefix = "mul(";
+    let suffix = ")";
+
+    let result: u64 = find_mul(&day.input[0], prefix, suffix)
+        .iter()
+        .map(|x| x[0] as u64 * x[1] as u64)
+        .sum();
+
+    if !day.test {
+        write!(day.part2, "{} ({:.2?})", result, now.elapsed()).unwrap();
+    } else {
+        write!(day.part2, "{}", result).unwrap();
+    }
+
+    fn find_mul(s: &str, pre: &str, suf: &str) -> Vec<[i16; 2]> {
+        let mut l = Vec::new();
+
+        let mut ptr = 0;
+        let mut eptr = s.find("don't()").unwrap();
+        loop {
+            while let Some(p_pos) = s[ptr..eptr].find(pre) {
+                let p_start = ptr + p_pos;
+                let avd = p_start + pre.len();
+
+                if let Some(s_pos) = s[avd..].find(suf) {
+                    let s_end = avd + s_pos + suf.len();
+                    ptr = avd + 1;
+
+                    if p_start.abs_diff(s_end) > pre.len() + suf.len() + 7 {
+                        continue;
+                    }
+                    let it: String = s[p_start..s_end]
+                        .chars()
+                        .filter(|x| x.is_numeric() || *x == ',')
+                        .collect();
+                    // println!("{:?}", it);
+                    if let Some(r) = it
+                        .split(',')
+                        .filter_map(|x| x.parse::<i16>().ok())
+                        .try_fold([0, 0], |mut acc, n| {
+                            if (acc[0] != 0 && acc[1] != 0) || n == 0 {
+                                return None;
+                            }
+                            if acc[0] == 0 {
+                                acc[0] = n;
+                            } else if acc[1] == 0 {
+                                acc[1] = n;
+                            }
+                            Some(acc)
+                        })
+                    {
+                        l.push(r);
+                    }
+                }
+            }
+            if let Some(n) = s[eptr..].find("do()") {
+                ptr = eptr + n;
+                eptr = ptr + s[ptr..].find("don't").unwrap_or(s[ptr..].len());
+                // println!("{} | {} | {}", ptr, eptr, s.len());
+            } else {
+                break;
+            }
+        }
+        l
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -72,9 +140,9 @@ mod tests {
     #[test]
     fn live_test() {
         let mut day = DayBuilder::new(3).as_test().build();
-        part1(&mut day);
-        assert_eq!(day.part1, "161");
-        // part2(&mut day);
-        assert_eq!(day.part2, "");
+        // part1(&mut day);
+        // assert_eq!(day.part1, "161");
+        part2(&mut day);
+        assert_eq!(day.part2, "48");
     }
 }
