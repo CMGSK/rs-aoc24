@@ -1,13 +1,14 @@
 use std::fs::read_to_string;
 pub mod day01;
 pub mod day02;
+pub mod day03;
 
 #[derive(Debug)]
 pub struct Day {
     pub input: Vec<String>,
     pub part1: String,
     pub part2: String,
-    pub test: bool
+    pub test: bool,
 }
 
 pub struct DayBuilder {
@@ -15,11 +16,11 @@ pub struct DayBuilder {
     pub input: Vec<String>,
     pub part1: String,
     pub part2: String,
-    pub test: bool
+    pub test: bool,
 }
 
 impl DayBuilder {
-    pub fn new (day: usize) -> Self {
+    pub fn new(day: usize) -> Self {
         Self {
             number: day,
             input: vec![],
@@ -57,7 +58,7 @@ impl DayBuilder {
             input: self.input,
             part1: self.part1,
             part2: self.part2,
-            test: self.test
+            test: self.test,
         }
     }
 }
