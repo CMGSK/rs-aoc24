@@ -24,13 +24,11 @@ macro_rules! exec_advent {
 }
 
 fn main() {
-    println!();
-    println!();
-    println!();
     #[rustfmt::skip]
     exec_advent!(
         day01, 1,
         day02, 2,
-        day03, 3
+        day03, 3,
+        day04, 4
     );
 }

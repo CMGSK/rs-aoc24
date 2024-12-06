@@ -1,4 +1,5 @@
 use super::Day;
+use std::arch::x86_64;
 use std::fmt::Write;
 use std::time::Instant;
 
@@ -46,16 +47,20 @@ pub fn part2(day: &mut Day) {
     let now = Instant::now();
     let mut result: u32 = 0;
 
-    for line in &day.input {
-        let rep: Vec<u16> = line
-            .split_whitespace()
-            .map(|x| x.parse::<u16>().unwrap())
-            .collect();
+    let result = day
+        .input
+        .iter()
+        .map(|line| {
+            line.split_whitespace()
+                .map(|x| x.parse::<u16>().unwrap())
+                .collect::<Vec<u16>>()
+        })
+        .filter(|x| is_ordered_safe(x, false) == 0)
+        .count() as u32;
 
-        if is_ordered_safe(&rep, false) == 0 {
-            result += 1;
-        }
-    }
+    // if is_ordered_safe(&rep, false) == 0 {
+    //     result += 1;
+    // }
 
     if !day.test {
         write!(day.part2, "{} ({:.2?})", result, now.elapsed()).unwrap();
