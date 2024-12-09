@@ -1,5 +1,4 @@
 use super::Day;
-use std::arch::x86_64;
 use std::fmt::Write;
 use std::time::Instant;
 
@@ -45,7 +44,6 @@ pub fn part1(day: &mut Day) {
 
 pub fn part2(day: &mut Day) {
     let now = Instant::now();
-    let mut result: u32 = 0;
 
     let result = day
         .input
@@ -57,10 +55,6 @@ pub fn part2(day: &mut Day) {
         })
         .filter(|x| is_ordered_safe(x, false) == 0)
         .count() as u32;
-
-    // if is_ordered_safe(&rep, false) == 0 {
-    //     result += 1;
-    // }
 
     if !day.test {
         write!(day.part2, "{} ({:.2?})", result, now.elapsed()).unwrap();
